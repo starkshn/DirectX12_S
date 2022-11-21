@@ -6,6 +6,7 @@
 #include "RootSignature.h"
 #include "Mesh.h"
 #include "Shader.h"
+#include "ConstantBuffer.h"
 
 class Engine
 {
@@ -23,6 +24,7 @@ public:
 	shared_ptr<CommandQueue>		GetCmdQueue()		{ return _cmdQueue; };
 	shared_ptr<SwapChain>			GetSwapChain()		{ return _swapChain; };
 	shared_ptr<RootSignature>		GetRootSignature()	{ return _rootSignature; };
+	shared_ptr<ConstantBuffer>		GetCB()				{ return _cd; };
 	
 private:
 	// 그려질 환면 크기 관련 된 변수들
@@ -37,6 +39,8 @@ private:
 	shared_ptr<RootSignature>		_rootSignature;
 
 	// shared_ptr<class DescriptorHeap>	_descHeap;	// ?
+	
+	shared_ptr<ConstantBuffer> _cd;
 };
 
  
