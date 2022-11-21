@@ -8,17 +8,15 @@ class CommandQueue
 public:
 	~CommandQueue();
 
-	void Init(ComPtr<ID3D12Device> device, shared_ptr<SwapChain> swapChain, shared_ptr<DescriptorHeap> descHeap);
+	void Init(ComPtr<ID3D12Device> device, shared_ptr<SwapChain> swapChain);
 	void WaitSync();
 
 	// 실제로 게임이 그려지는 부분
 	void RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect);
 	void RenderEnd();
 
-	ComPtr<ID3D12CommandQueue> GetCmdQueue() 
-	{
-		return _cmdQueue;
-	}
+	ComPtr<ID3D12CommandQueue>			GetCmdQueue()	{ return _cmdQueue; };
+	ComPtr<ID3D12GraphicsCommandList>	GetCmdList()	{ return _cmdList; }; // 뭐시기 리스트임.
 
 private:
 	// CommandQueue : DX12에 등장
@@ -31,12 +29,12 @@ private:
 
 	// Fence : 울타리 (?)
 	// CPU / GPU 동기화를 위한 간단한 도구
-	ComPtr<ID3D12Fence>		_fence;
-	uint32					_fenceValue = 0;
-	HANDLE					_fenceEvent = INVALID_HANDLE_VALUE;
+	// 데이터 처리가 끝날 때까지 기다릴 수 있게하는 기능.
+	ComPtr<ID3D12Fence>					_fence;
+	uint32								_fenceValue = 0;
+	HANDLE								_fenceEvent = INVALID_HANDLE_VALUE;
 	
-	shared_ptr<SwapChain>		_swapChain;
-	shared_ptr<DescriptorHeap>	_descHeap;
+	shared_ptr<SwapChain>				_swapChain;
 
 };
 
