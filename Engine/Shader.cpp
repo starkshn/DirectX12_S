@@ -4,13 +4,14 @@
 
 void Shader::Init(const wstring& path)
 {
-	CreateVertexShader(path, "VS_Main", "vs_5_0");
-	CreatePixelShader(path, "PS_Main", "ps_5_0");
+	CreateVertexShader(path,	"VS_Main", "vs_5_0");
+	CreatePixelShader(path,		"PS_Main", "ps_5_0");
 
 	D3D12_INPUT_ELEMENT_DESC desc[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 28, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 	};
 
 	_pipelineDesc.InputLayout = { desc, _countof(desc) };
@@ -41,7 +42,6 @@ void Shader::CreateShader(const wstring& path, const string& name, const string&
 	compileFlag = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 #endif
 
-	// shader파일 읽어서 parsing하는 부분
 	if (FAILED(::D3DCompileFromFile(path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 		, name.c_str(), version.c_str(), compileFlag, 0, &blob, &_errBlob)))
 	{

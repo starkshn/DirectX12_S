@@ -20,16 +20,18 @@ void Mesh::Render()
 	// 2) TableDescHeap에다가 CBV 전달
 	// 3) 모두 세팅이 끝났으면 TableDescHeap 커밋
 	{
-		D3D12_CPU_DESCRIPTOR_HANDLE handle = GEngine->GetCB()->PushData (0, &_transform, sizeof(_transform));
+		D3D12_CPU_DESCRIPTOR_HANDLE handle = GEngine->GetCB()->PushData(0, &_transform, sizeof(_transform));
 		GEngine->GetTableDescHeap()->SetCBV(handle, CBV_REGISTER::b0);
-	}
+
+		GEngine->GetTableDescHeap()->SetSRV(_tex->GetCpuHandle(), SRV_REGISTER::t0);
+	} 
 
 	GEngine->GetTableDescHeap()->CommitTable();
 
 	
 	// CMD_LIST->DrawInstanced(_vertexCount, 1, 0, 0);
 	CMD_LIST->DrawIndexedInstanced(_indexCount, 1, 0, 0, 0);
-	
+
 }
 
 void Mesh::CreateVertexBuffer(const vector<Vertex>& buffer)
@@ -47,8 +49,6 @@ void Mesh::CreateVertexBuffer(const vector<Vertex>& buffer)
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&_vertexBuffer));
-	// _vertexBuffer GPU의 공간을 가르키고있다.
-
 
 	// Copy the triangle data to the vertex buffer.
 	void* vertexDataBuffer = nullptr;
@@ -60,7 +60,7 @@ void Mesh::CreateVertexBuffer(const vector<Vertex>& buffer)
 	// Initialize the vertex buffer view.
 	_vertexBufferView.BufferLocation = _vertexBuffer->GetGPUVirtualAddress();
 	_vertexBufferView.StrideInBytes = sizeof(Vertex); // 정점 1개 크기
-	_vertexBufferView.SizeInBytes = bufferSize; // 버퍼의 크기
+	_vertexBufferView.SizeInBytes = bufferSize; // 버퍼의 크기	
 }
 
 void Mesh::CreateIndexBuffer(const vector<uint32>& buffer)
@@ -71,15 +71,13 @@ void Mesh::CreateIndexBuffer(const vector<uint32>& buffer)
 	D3D12_HEAP_PROPERTIES heapProperty = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	D3D12_RESOURCE_DESC desc = CD3DX12_RESOURCE_DESC::Buffer(bufferSize);
 
-	DEVICE->CreateCommittedResource
-	(
+	DEVICE->CreateCommittedResource(
 		&heapProperty,
 		D3D12_HEAP_FLAG_NONE,
 		&desc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&_indexBuffer)
-	);
+		IID_PPV_ARGS(&_indexBuffer));
 
 	void* indexDataBuffer = nullptr;
 	CD3DX12_RANGE readRange(0, 0); // We do not intend to read from this resource on the CPU.
