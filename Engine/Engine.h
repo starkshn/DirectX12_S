@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "ConstantBuffer.h"
+#include "TableDescriptorHeap.h"
 
 class Engine
 {
@@ -25,6 +26,7 @@ public:
 	shared_ptr<SwapChain>			GetSwapChain()		{ return _swapChain; };
 	shared_ptr<RootSignature>		GetRootSignature()	{ return _rootSignature; };
 	shared_ptr<ConstantBuffer>		GetCB()				{ return _cd; };
+	shared_ptr<TableDescriptorHeap> GetTableDescHeap()	{ return _tableDescHeap; };
 	
 private:
 	// 그려질 환면 크기 관련 된 변수들
@@ -40,7 +42,8 @@ private:
 
 	// shared_ptr<class DescriptorHeap>	_descHeap;	// ?
 	
-	shared_ptr<ConstantBuffer> _cd;
+	shared_ptr<ConstantBuffer>		_cd;
+	shared_ptr<TableDescriptorHeap> _tableDescHeap;
 };
 
  
