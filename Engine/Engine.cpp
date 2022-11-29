@@ -5,7 +5,6 @@
 void Engine::Init(const WindowInfo& winInfo)
 {
 	_winInfo = winInfo;
-	ResizeWindow(winInfo.width, winInfo.height);
 
 	// 그려질 화면 크기 설정
 	_viewport = { 0, 0, static_cast<FLOAT>(winInfo.width), static_cast<FLOAT>(winInfo.height), 0.0f, 1.0f };
@@ -18,6 +17,7 @@ void Engine::Init(const WindowInfo& winInfo)
 	_rootSignature = make_shared<RootSignature>();
 	_cd = make_shared<ConstantBuffer>();
 	_tableDescHeap = make_shared<TableDescriptorHeap>();
+	_depthStencilBuffer = make_shared<DepthStencilBuffer>();
 
 	_device->Init();
 	_cmdQueue->Init(_device->GetDevice(), _swapChain);
@@ -25,6 +25,9 @@ void Engine::Init(const WindowInfo& winInfo)
 	_rootSignature->Init();
 	_cd->Init(sizeof(Transform), 256);
 	_tableDescHeap->Init(256);
+	_depthStencilBuffer->Init(_winInfo);
+
+	ResizeWindow(winInfo.width, winInfo.height);
 }
 
 void Engine::Render()
@@ -54,5 +57,7 @@ void Engine::ResizeWindow(int32 width, int32 height)
 	RECT rect = { 0, 0, width, height };
 	::AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
 	::SetWindowPos(_winInfo.hWnd, 0, 100, 100, width, height, 0);
+
+	_depthStencilBuffer->Init(_winInfo);
 	
 }
