@@ -11,11 +11,18 @@
 #include "Texture.h"
 #include "DepthStencilBuffer.h"
 
+// Component
+#include "Input.h"
+#include "Timer.h"
+
 class Engine
 {
 public:
 	void Init(const WindowInfo& winInfo);
 	void Render();
+
+public:
+	void Update();
 
 public:
 	void RenderBegin();	// CommandQueue 에다가 요청사항들 넣을 시간? 부분? 정도
@@ -27,9 +34,16 @@ public:
 	shared_ptr<CommandQueue>		GetCmdQueue()		{ return _cmdQueue; };
 	shared_ptr<SwapChain>			GetSwapChain()		{ return _swapChain; };
 	shared_ptr<RootSignature>		GetRootSignature()	{ return _rootSignature; };
-	shared_ptr<ConstantBuffer>		GetCB()				{ return _cd; };
+	shared_ptr<ConstantBuffer>		GetCB()				{ return _cb; };
 	shared_ptr<TableDescriptorHeap> GetTableDescHeap() { return _tableDescHeap; };
-	shared_ptr<DepthStencilBuffer> GetDepthStencilBuffer()	{ return _depthStencilBuffer; };
+	shared_ptr<DepthStencilBuffer> GetDepthStencilBuffer() { return _depthStencilBuffer; };
+
+	// Component
+	shared_ptr<Input> GetInput() { return _input; };
+	shared_ptr<Timer> GetTimer() { return _timer; };
+
+private:
+	void ShowFPS();
 	
 private:
 	// 그려질 환면 크기 관련 된 변수들
@@ -37,18 +51,17 @@ private:
 	D3D12_VIEWPORT	_viewport = {};
 	D3D12_RECT		_scissorRect = {};
 	
-	// Tool? 초기화에 꼭 필요한 부분들
-	shared_ptr<Device>				_device;	// Device (핵심?!)
-	shared_ptr<CommandQueue>		_cmdQueue;	// 데이터(일감) 처리 부분
-	shared_ptr<SwapChain>			_swapChain; // Double Buffering
-	shared_ptr<RootSignature>		_rootSignature;
+	shared_ptr<Device> _device = make_shared<Device>();
+	shared_ptr<CommandQueue> _cmdQueue = make_shared<CommandQueue>();
+	shared_ptr<SwapChain> _swapChain = make_shared<SwapChain>();
+	shared_ptr<RootSignature> _rootSignature = make_shared<RootSignature>();
+	shared_ptr<ConstantBuffer> _cb = make_shared<ConstantBuffer>();
+	shared_ptr<TableDescriptorHeap> _tableDescHeap = make_shared<TableDescriptorHeap>();
+	shared_ptr<DepthStencilBuffer> _depthStencilBuffer = make_shared<DepthStencilBuffer>();
 
-	// shared_ptr<class DescriptorHeap>	_descHeap;	// ?
-	
-	shared_ptr<ConstantBuffer>		_cd;
-	shared_ptr<TableDescriptorHeap> _tableDescHeap;
-	shared_ptr<DepthStencilBuffer>	_depthStencilBuffer;
-	
+	// component
+	shared_ptr<Input> _input = make_shared<Input>();
+	shared_ptr<Timer> _timer = make_shared<Timer>();
 };
 
  
