@@ -11,57 +11,59 @@
 #include "Texture.h"
 #include "DepthStencilBuffer.h"
 
-// Component
 #include "Input.h"
 #include "Timer.h"
 
 class Engine
 {
 public:
-	void Init(const WindowInfo& winInfo);
+
+	void Init(const WindowInfo& info);
 	void Render();
 
 public:
 	void Update();
+	void LateUpdate();
 
 public:
-	void RenderBegin();	// CommandQueue 에다가 요청사항들 넣을 시간? 부분? 정도
-	void RenderEnd();	// 진짜 끝난게 아니라 GPU에게 commit 할 부분정도 라고 이해 ㄱㄱ.
+	shared_ptr<Device> GetDevice() { return _device; }
+	shared_ptr<CommandQueue> GetCmdQueue() { return _cmdQueue; }
+	shared_ptr<SwapChain> GetSwapChain() { return _swapChain; }
+	shared_ptr<RootSignature> GetRootSignature() { return _rootSignature; }
+	shared_ptr<TableDescriptorHeap> GetTableDescHeap() { return _tableDescHeap; }
+	shared_ptr<DepthStencilBuffer> GetDepthStencilBuffer() { return _depthStencilBuffer; }
+
+	shared_ptr<Input> GetInput() { return _input; }
+	shared_ptr<Timer> GetTimer() { return _timer; }
+
+	shared_ptr<ConstantBuffer> GetConstantBuffer(CONSTANT_BUFFER_TYPE type) { return _constantBuffers[static_cast<uint8>(type)]; }
+
+public:
+	void RenderBegin();
+	void RenderEnd();
+
 	void ResizeWindow(int32 width, int32 height);
 
-public:
-	shared_ptr<Device>				GetDevice()			{ return _device; };
-	shared_ptr<CommandQueue>		GetCmdQueue()		{ return _cmdQueue; };
-	shared_ptr<SwapChain>			GetSwapChain()		{ return _swapChain; };
-	shared_ptr<RootSignature>		GetRootSignature()	{ return _rootSignature; };
-	shared_ptr<ConstantBuffer>		GetCB()				{ return _cb; };
-	shared_ptr<TableDescriptorHeap> GetTableDescHeap() { return _tableDescHeap; };
-	shared_ptr<DepthStencilBuffer> GetDepthStencilBuffer() { return _depthStencilBuffer; };
-
-	// Component
-	shared_ptr<Input> GetInput() { return _input; };
-	shared_ptr<Timer> GetTimer() { return _timer; };
+private:
+	void ShowFps();
+	void CreateConstantBuffer(CBV_REGISTER reg, uint32 bufferSize, uint32 count);
 
 private:
-	void ShowFPS();
-	
-private:
-	// 그려질 환면 크기 관련 된 변수들
-	WindowInfo		_winInfo;
+	// 그려질 화면 크기 관련
+	WindowInfo		_window;
 	D3D12_VIEWPORT	_viewport = {};
 	D3D12_RECT		_scissorRect = {};
-	
+
 	shared_ptr<Device> _device = make_shared<Device>();
 	shared_ptr<CommandQueue> _cmdQueue = make_shared<CommandQueue>();
 	shared_ptr<SwapChain> _swapChain = make_shared<SwapChain>();
 	shared_ptr<RootSignature> _rootSignature = make_shared<RootSignature>();
-	shared_ptr<ConstantBuffer> _cb = make_shared<ConstantBuffer>();
 	shared_ptr<TableDescriptorHeap> _tableDescHeap = make_shared<TableDescriptorHeap>();
 	shared_ptr<DepthStencilBuffer> _depthStencilBuffer = make_shared<DepthStencilBuffer>();
 
-	// component
 	shared_ptr<Input> _input = make_shared<Input>();
 	shared_ptr<Timer> _timer = make_shared<Timer>();
+
+	vector<shared_ptr<ConstantBuffer>> _constantBuffers;
 };
 
- 

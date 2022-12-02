@@ -38,7 +38,6 @@ void Input::Update()
 		}
 		else
 		{
-			// 누른적이 없으니 땐 상태라고 인지.
 			KEY_STATE& state = _states[key];
 
 			// 이전 프레임에 키를 누른 상태라면 UP

@@ -4,8 +4,8 @@
 
 void Shader::Init(const wstring& path)
 {
-	CreateVertexShader(path,	"VS_Main", "vs_5_0");
-	CreatePixelShader(path,		"PS_Main", "ps_5_0");
+	CreateVertexShader(path, "VS_Main", "vs_5_0");
+	CreatePixelShader(path, "PS_Main", "ps_5_0");
 
 	D3D12_INPUT_ELEMENT_DESC desc[] =
 	{

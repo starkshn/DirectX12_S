@@ -17,8 +17,12 @@ ConstantBuffer::~ConstantBuffer()
 	}
 }
 
-void ConstantBuffer::Init(uint32 size, uint32 count)
+
+
+void ConstantBuffer::Init(CBV_REGISTER reg, uint32 size, uint32 count)
 {
+	_reg = reg;
+
 	// 상수 버퍼는 256 바이트 배수로 만들어야 한다
 	// 0 256 512 768
 	_elementSize = (size + 255) & ~255;
@@ -27,7 +31,6 @@ void ConstantBuffer::Init(uint32 size, uint32 count)
 	CreateBuffer();
 	CreateView();
 }
-
 
 void ConstantBuffer::CreateBuffer()
 {
@@ -64,34 +67,29 @@ void ConstantBuffer::CreateView()
 		D3D12_CPU_DESCRIPTOR_HANDLE cbvHandle = GetCpuHandle(i);
 
 		D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
-
-		// 버퍼의 주소 위치 설정
 		cbvDesc.BufferLocation = _cbvBuffer->GetGPUVirtualAddress() + static_cast<uint64>(_elementSize) * i;
-		// 버퍼의 크기 설정
 		cbvDesc.SizeInBytes = _elementSize;   // CB size is required to be 256-byte aligned.
 
-		// 버퍼를 통해서 View를 만드는 부분
 		DEVICE->CreateConstantBufferView(&cbvDesc, cbvHandle);
 	}
 }
-
 
 void ConstantBuffer::Clear()
 {
 	_currentIndex = 0;
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE ConstantBuffer::PushData(int32 rootParamIndex, void* buffer, uint32 size)
+void ConstantBuffer::PushData(void* buffer, uint32 size)
 {
-	assert(_currentIndex < _elementSize);
+	assert(_currentIndex < _elementCount);
+	assert(_elementSize == ((size + 255) & ~255));
 
 	::memcpy(&_mappedBuffer[_currentIndex * _elementSize], buffer, size);
 
 	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = GetCpuHandle(_currentIndex);
-	
-	_currentIndex++;
+	GEngine->GetTableDescHeap()->SetCBV(cpuHandle, _reg);
 
-	return cpuHandle;
+	_currentIndex++;
 }
 
 D3D12_GPU_VIRTUAL_ADDRESS ConstantBuffer::GetGpuVirtualAddress(uint32 index)
@@ -101,14 +99,7 @@ D3D12_GPU_VIRTUAL_ADDRESS ConstantBuffer::GetGpuVirtualAddress(uint32 index)
 	return objCBAddress;
 }
 
-
 D3D12_CPU_DESCRIPTOR_HANDLE ConstantBuffer::GetCpuHandle(uint32 index)
 {
-	// 이버전이랑
-	// D3D12_CPU_DESCRIPTOR_HANDLE handle = _cpuHandleBegin;
-	// handle.ptr += _handleIncrementSize;
-	// return handle;
-
-	// 이버젼이랑 완전 똑같음.
 	return CD3DX12_CPU_DESCRIPTOR_HANDLE(_cpuHandleBegin, index * _handleIncrementSize);
 }

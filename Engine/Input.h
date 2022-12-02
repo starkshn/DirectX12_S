@@ -2,22 +2,15 @@
 
 enum class KEY_TYPE
 {
-	UP		= VK_UP,
-	DOWN	= VK_DOWN,
-	LEFT	= VK_LEFT,
-	RIGHT	= VK_RIGHT,
-	//LSHIFT	= VK_LSHIFT,
-	//SPACE	= VK_SPACE,
-	//CONTROL = VK_CONTROL,
-	//ESC		= VK_ESCAPE,
-	//LBUTTON = VK_LBUTTON,
-	//RBUTTON = VK_RBUTTON,
+	UP = VK_UP,
+	DOWN = VK_DOWN,
+	LEFT = VK_LEFT,
+	RIGHT = VK_RIGHT,
 
 	W = 'W',
 	A = 'A',
 	S = 'S',
 	D = 'D',
-
 };
 
 enum class KEY_STATE
@@ -52,8 +45,7 @@ private:
 	inline KEY_STATE GetState(KEY_TYPE key) { return _states[static_cast<uint8>(key)]; }
 
 private:
-	HWND				_hwnd;
-	vector<KEY_STATE>	_states;
-
+	HWND _hwnd;
+	vector<KEY_STATE> _states;
 };
 

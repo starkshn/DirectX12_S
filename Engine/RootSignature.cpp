@@ -32,4 +32,3 @@ void RootSignature::CreateSamplerDesc()
 {
 	_samplerDesc = CD3DX12_STATIC_SAMPLER_DESC(0);
 }
-
