@@ -4,9 +4,6 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{7833c5b5-3ca0-43de-86e4-1d9fb0095c18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{4365c30a-0413-446b-af6f-d08cadcd9ace}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{ac1451cc-badf-408a-ac38-90d0c51dc239}</UniqueIdentifier>
     </Filter>
@@ -15,6 +12,12 @@
     </Filter>
     <Filter Include="GameObject">
       <UniqueIdentifier>{6a658333-c5d9-4ad7-b452-bf98af66f850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{b318db2b-63e7-4f8e-945e-c6dd601173a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\Engine">
+      <UniqueIdentifier>{4365c30a-0413-446b-af6f-d08cadcd9ace}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -25,19 +28,19 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClCompile>
     <ClCompile Include="CommandQueue.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Device.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClCompile>
     <ClCompile Include="SwapChain.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClCompile>
     <ClCompile Include="RootSignature.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Resource</Filter>
@@ -46,22 +49,16 @@
       <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="ConstantBuffer.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClCompile>
     <ClCompile Include="TableDescriptorHeap.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="DepthStencilBuffer.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
       <Filter>Resource</Filter>
@@ -81,6 +78,18 @@
     <ClCompile Include="Monobehaviour.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -93,19 +102,19 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClInclude>
     <ClInclude Include="CommandQueue.h">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Device.h">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClInclude>
     <ClInclude Include="SwapChain.h">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClInclude>
     <ClInclude Include="RootSignature.h">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Resource</Filter>
@@ -114,22 +123,16 @@
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="ConstantBuffer.h">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClInclude>
     <ClInclude Include="TableDescriptorHeap.h">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="DepthStencilBuffer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Engine</Filter>
+      <Filter>Manager\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>Resource</Filter>
@@ -148,6 +151,18 @@
     </ClInclude>
     <ClInclude Include="Monobehaviour.h">
       <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
